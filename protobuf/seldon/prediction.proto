@@ -9,7 +9,7 @@ package seldon.protos;
 
 option java_package = "io.seldon.protos";
 option java_outer_classname = "PredictionProtos";
-option go_package = "carousel/seldonio/protobuf/seldon-core";
+option go_package = "seldonio/protobuf/seldon-core";
 
 // [START Messages]
 

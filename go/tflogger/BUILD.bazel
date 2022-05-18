@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "tflogger_lib",
+    srcs = ["main.go"],
+    importpath = "test_tflogger/go/tflogger",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//protobuf/tensorflow_serving/apis",
+        "@in_gopkg_confluentinc_confluent_kafka_go_v1//kafka",
+    ],
+)
+
+go_binary(
+    name = "tflogger",
+    embed = [":tflogger_lib"],
+    visibility = ["//visibility:public"],
+)

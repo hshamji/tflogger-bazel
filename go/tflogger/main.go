@@ -1,8 +1,9 @@
 package main
 
 import (
-	// tfserving "carousel/protobuf/tensorflow_serving/apis"
 	"fmt"
+	// tfserving "protobuf/tensorflow_serving/apis"
+	tfserving "test_tflogger/protobuf/tensorflow_serving/apis"
 
 	"gopkg.in/confluentinc/confluent-kafka-go.v1/kafka"
 )
@@ -45,6 +46,6 @@ func main() {
 	// Wait for message deliveries before shutting down
 	p.Flush(15 * 1000)
 
-	// a := tfserving.PredictResponse{}
-	// fmt.Println("This is a test", a)
+	a := tfserving.PredictResponse{}
+	fmt.Println("This is a test", a)
 }
