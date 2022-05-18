@@ -15,7 +15,7 @@ proto_library(
 
 go_proto_library(
     name = "example_go_proto",
-    importpath = "carousel/tensorflow/core/example",
+    importpath = "tensorflow/core/example",
     proto = ":example_proto",
     visibility = ["//visibility:public"],
     deps = ["//protobuf/tensorflow/core/framework"],
@@ -24,6 +24,6 @@ go_proto_library(
 go_library(
     name = "example",
     embed = [":example_go_proto"],
-    importpath = "carousel/tensorflow/core/example",
+    importpath = "tensorflow/core/example",
     visibility = ["//visibility:public"],
 )

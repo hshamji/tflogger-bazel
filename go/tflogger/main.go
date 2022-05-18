@@ -46,6 +46,6 @@ func main() {
 	// Wait for message deliveries before shutting down
 	p.Flush(15 * 1000)
 
-	a := tfserving.PredictResponse{}
+	a := tfserving.PredictRequest{}
 	fmt.Println("This is a test", a)
 }

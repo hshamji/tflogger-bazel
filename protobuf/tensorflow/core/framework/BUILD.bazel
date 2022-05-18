@@ -26,7 +26,7 @@ proto_library(
 
 go_proto_library(
     name = "framework_go_proto",
-    importpath = "carousel/tensorflow/core/framework",
+    importpath = "tensorflow/core/framework",
     proto = ":framework_proto",
     visibility = ["//visibility:public"],
 )
@@ -34,6 +34,6 @@ go_proto_library(
 go_library(
     name = "framework",
     embed = [":framework_go_proto"],
-    importpath = "carousel/tensorflow/core/framework",
+    importpath = "tensorflow/core/framework",
     visibility = ["//visibility:public"],
 )

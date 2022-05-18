@@ -23,7 +23,7 @@ proto_library(
 
 go_proto_library(
     name = "protobuf_go_proto",
-    importpath = "carousel/tensorflow/core/protobuf",
+    importpath = "tensorflow/core/protobuf",
     proto = ":protobuf_proto",
     visibility = ["//visibility:public"],
     deps = ["//protobuf/tensorflow/core/framework"],
@@ -32,6 +32,6 @@ go_proto_library(
 go_library(
     name = "protobuf",
     embed = [":protobuf_go_proto"],
-    importpath = "carousel/tensorflow/core/protobuf",
+    importpath = "tensorflow/core/protobuf",
     visibility = ["//visibility:public"],
 )

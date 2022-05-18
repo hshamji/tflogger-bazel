@@ -18,7 +18,7 @@ proto_library(
 
 go_proto_library(
     name = "rpc_go_proto",
-    importpath = "carousel/googleapis/rpc",
+    importpath = "googleapis/rpc",
     proto = ":rpc_proto",
     visibility = ["//visibility:public"],
 )
@@ -26,6 +26,6 @@ go_proto_library(
 go_library(
     name = "rpc",
     embed = [":rpc_go_proto"],
-    importpath = "carousel/googleapis/rpc",
+    importpath = "googleapis/rpc",
     visibility = ["//visibility:public"],
 )

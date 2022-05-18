@@ -17,7 +17,7 @@ proto_library(
 go_proto_library(
     name = "core_go_proto",
     compilers = ["@io_bazel_rules_go//proto:go_grpc"],
-    importpath = "carousel/seldonio/protobuf/seldon-core",
+    importpath = "seldonio/protobuf/seldon-core",
     proto = ":core_proto",
     visibility = ["//visibility:public"],
     deps = ["//protobuf/tensorflow/core/framework"],
@@ -26,6 +26,6 @@ go_proto_library(
 go_library(
     name = "seldon-core",
     embed = [":core_go_proto"],
-    importpath = "carousel/seldonio/protobuf/seldon-core",
+    importpath = "seldonio/protobuf/seldon-core",
     visibility = ["//visibility:public"],
 )

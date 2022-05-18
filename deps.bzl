@@ -59,7 +59,6 @@ def go_dependencies():
     )
     go_repository(
         name = "com_github_confluentinc_confluent_kafka_go",
-        build_file_proto_mode = "disable_global",
         importpath = "github.com/confluentinc/confluent-kafka-go",
         sum = "h1:PBdbvYpyOdFLehj8j+9ba7FL4c4Moxn79gy9cYKxG5E=",
         version = "v1.8.2",
@@ -186,7 +185,6 @@ def go_dependencies():
     )
     go_repository(
         name = "in_gopkg_confluentinc_confluent_kafka_go_v1",
-        build_file_proto_mode = "disable_global",
         importpath = "gopkg.in/confluentinc/confluent-kafka-go.v1",
         sum = "h1:QAgN6OC0o7dwvyz+HML6GYm+0Pk54O91+oxGqJ/5z8I=",
         version = "v1.8.2",
