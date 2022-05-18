@@ -4,14 +4,20 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "8e968b5fcea1d2d64071872b12737bbb5514524ee5f0a4f54f5920266c261acb",
-    url = "https://github.com/bazelbuild/rules_go/releases/download/v0.28.0/rules_go-v0.28.0.zip",
+    sha256 = "f2dcd210c7095febe54b804bb1cd3a58fe8435a909db2ec04e31542631cf715c",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.31.0/rules_go-v0.31.0.zip",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.31.0/rules_go-v0.31.0.zip",
+    ],
 )
 
 http_archive(
     name = "bazel_gazelle",
-    sha256 = "62ca106be173579c0a167deb23358fdfe71ffa1e4cfdddf5582af26520f1c66f",
-    url = "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.23.0/bazel-gazelle-v0.23.0.tar.gz",
+    sha256 = "5982e5463f171da99e3bdaeff8c0f48283a7a5f396ec5282910b9e8a49c0dd7e",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.25.0/bazel-gazelle-v0.25.0.tar.gz",
+        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.25.0/bazel-gazelle-v0.25.0.tar.gz",
+    ],
 )
 
 http_archive(
@@ -74,3 +80,48 @@ protobuf_deps()
 #     sum = "h1:g61tztE5qeGQ89tm6NTjjM9VPIm088od1l6aSorWRWg=",
 #     version = "v0.3.0",
 # )
+
+all_content = """filegroup(name = "all", srcs = glob(["**"]), visibility = ["//visibility:public"])"""
+
+http_archive(
+    name = "rules_foreign_cc",
+    strip_prefix = "rules_foreign_cc-main",
+    url = "https://github.com/bazelbuild/rules_foreign_cc/archive/main.zip",
+    sha256 = "5969e26dea8b4d715c61a8b359e819ef87f8490e0cc26f19248f916d95903e15",
+)
+
+load("@rules_foreign_cc//:workspace_definitions.bzl", "rules_foreign_cc_dependencies")
+
+rules_foreign_cc_dependencies()
+
+http_archive(
+    name = "librdkafka",
+    build_file_content = """load("@rules_foreign_cc//tools/build_defs:cmake.bzl", "cmake_external")
+
+filegroup(
+    name = "sources",
+    srcs = glob(["**"]),
+)
+
+cmake_external(
+    name = "librdkafka",
+    cache_entries = {
+        "RDKAFKA_BUILD_STATIC": "ON",
+        "WITH_ZSTD": "OFF",
+        "WITH_SSL": "OFF",
+        "WITH_SASL": "OFF",
+        "ENABLE_LZ4_EXT": "OFF",
+        "WITH_LIBDL": "OFF",
+    },
+    lib_source = ":sources",
+    static_libraries = [
+        "librdkafka++.a",
+        "librdkafka.a",
+    ],
+    visibility = ["//visibility:public"],
+)
+""",
+    sha256 = "ae27ea3f3d0d32d29004e7f709efbba2666c5383a107cc45b3a1949486b2eb84",
+    strip_prefix = "librdkafka-1.4.0",
+    urls = ["https://github.com/edenhill/librdkafka/archive/v1.4.0.tar.gz"],
+)

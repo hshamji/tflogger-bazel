@@ -1,4 +1,5 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@rules_foreign_cc//tools/build_defs:cmake.bzl", "cmake_external")
 
 go_library(
     name = "tflogger_lib",
@@ -7,12 +8,32 @@ go_library(
     visibility = ["//visibility:private"],
     deps = [
         "//protobuf/tensorflow_serving/apis",
-        "@in_gopkg_confluentinc_confluent_kafka_go_v1//kafka",
+        ":librdkafka",
     ],
 )
 
 go_binary(
     name = "tflogger",
     embed = [":tflogger_lib"],
+    visibility = ["//visibility:public"],
+)
+
+
+
+cmake_external(
+    name = "librdkafka",
+    cache_entries = {
+        "RDKAFKA_BUILD_STATIC": "ON",
+        "WITH_ZSTD": "OFF",
+        "WITH_SSL": "OFF",
+        "WITH_SASL": "OFF",
+        "ENABLE_LZ4_EXT": "OFF",
+        "WITH_LIBDL": "OFF",
+    },
+    lib_source = "@librdkafka//:all",
+    static_libraries = [
+        "librdkafka++.a",
+        "librdkafka.a",
+    ],
     visibility = ["//visibility:public"],
 )
