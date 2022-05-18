@@ -1,0 +1,51 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+
+proto_library(
+    name = "tensorflow_serving_proto",
+    srcs = [
+        "classification.proto",
+        "get_model_metadata.proto",
+        "get_model_status.proto",
+        "inference.proto",
+        "input.proto",
+        "model.proto",
+        "model_management.proto",
+        "model_service.proto",
+        "predict.proto",
+        "prediction_service.proto",
+        "regression.proto",
+        "status.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//protobuf/tensorflow/core/example:example_proto",
+        "//protobuf/tensorflow/core/framework:framework_proto",
+        "//protobuf/tensorflow/core/protobuf:protobuf_proto",
+        "//protobuf/tensorflow_serving/config:tensorflow_serving_proto",
+        "@com_google_protobuf//:any_proto",
+        "@com_google_protobuf//:wrappers_proto",
+    ],
+)
+
+go_proto_library(
+    name = "tensorflow_serving_go_proto",
+    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
+    importpath = "test_tflogger/protobuf/tensorflow_serving/apis",
+    proto = ":tensorflow_serving_proto",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//protobuf/tensorflow/core/example",
+        "//protobuf/tensorflow/core/framework",
+        "//protobuf/tensorflow/core/protobuf",
+        "//protobuf/tensorflow_serving/config",
+    ],
+)
+
+go_library(
+    name = "apis",
+    embed = [":tensorflow_serving_go_proto"],
+    importpath = "test_tflogger/protobuf/tensorflow_serving/apis",
+    visibility = ["//visibility:public"],
+)

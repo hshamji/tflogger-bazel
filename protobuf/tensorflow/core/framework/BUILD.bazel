@@ -1,0 +1,39 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+
+proto_library(
+    name = "framework_proto",
+    srcs = [
+        "api_def.proto",
+        "attr_value.proto",
+        "full_type.proto",
+        "function.proto",
+        "graph.proto",
+        "node_def.proto",
+        "op_def.proto",
+        "resource_handle.proto",
+        "summary.proto",
+        "tensor.proto",
+        "tensor_shape.proto",
+        "tensor_slice.proto",
+        "types.proto",
+        "variable.proto",
+        "versions.proto",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+go_proto_library(
+    name = "framework_go_proto",
+    importpath = "carousel/tensorflow/core/framework",
+    proto = ":framework_proto",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "framework",
+    embed = [":framework_go_proto"],
+    importpath = "carousel/tensorflow/core/framework",
+    visibility = ["//visibility:public"],
+)

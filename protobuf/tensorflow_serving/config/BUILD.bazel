@@ -1,0 +1,29 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+
+proto_library(
+    name = "tensorflow_serving_proto",
+    srcs = [
+        "file_system_storage_path_source.proto",
+        "log_collector_config.proto",
+        "logging_config.proto",
+        "model_server_config.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = ["@com_google_protobuf//:any_proto"],
+)
+
+go_proto_library(
+    name = "tensorflow_serving_go_proto",
+    importpath = "test_tflogger/protobuf/tensorflow_serving/config",
+    proto = ":tensorflow_serving_proto",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "config",
+    embed = [":tensorflow_serving_go_proto"],
+    importpath = "test_tflogger/protobuf/tensorflow_serving/config",
+    visibility = ["//visibility:public"],
+)

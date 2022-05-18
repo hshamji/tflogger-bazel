@@ -1,0 +1,37 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+
+proto_library(
+    name = "protobuf_proto",
+    srcs = [
+        "error_codes.proto",
+        "meta_graph.proto",
+        "saved_model.proto",
+        "saved_object_graph.proto",
+        "saver.proto",
+        "struct.proto",
+        "tensor_bundle.proto",
+        "trackable_object_graph.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//protobuf/tensorflow/core/framework:framework_proto",
+        "@com_google_protobuf//:any_proto",
+    ],
+)
+
+go_proto_library(
+    name = "protobuf_go_proto",
+    importpath = "carousel/tensorflow/core/protobuf",
+    proto = ":protobuf_proto",
+    visibility = ["//visibility:public"],
+    deps = ["//protobuf/tensorflow/core/framework"],
+)
+
+go_library(
+    name = "protobuf",
+    embed = [":protobuf_go_proto"],
+    importpath = "carousel/tensorflow/core/protobuf",
+    visibility = ["//visibility:public"],
+)
